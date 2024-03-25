@@ -23,33 +23,34 @@ const particleTexture = textureLoader.load('./textures/particles/2.png')
  * Particles
  */
 const particlesGeometry = new THREE.BufferGeometry()
-const count = 400
+const count = 550
 // const positions = new Float32Array(count * 3)
 const colors = new Float32Array(count * 3)
 const positions = []
 
 for(let i=0;i<count*3;i++){
     // positions[i] = (Math.random()-0.5)*4
-    colors[i] = Math.random() * 5
+    colors[i] = Math.random() * 0.5
 }
 
 // particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+// particlesGeometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 1))
+// particlesGeometry.attributes.color.needsUpdate = true
 
 const particlesMaterial = new THREE.PointsMaterial({
     size: 0.1,
     sizeAttenuation: true, 
-    // color: '#ff88cc',
+    color: '#ff88cc',
     transparent: true,
     alphaMap: particleTexture,
     // alphaTest: 0.001,
     // depthTest: false,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
-    vertexColors: true
+    //vertexColors: true
 })
 
-const radius = 3;
+const radius = 1;
 const t = clock.getElapsedTime();
 let theta = 0, phi = 0;
 
