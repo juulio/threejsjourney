@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
+import AnimatedBush from './animatedBush';
 
 /**
  * Base
@@ -41,6 +42,7 @@ const grassColorTexture = textureLoader.load('./textures/grass/color.jpg')
 const grassAmbientOcclusionTexture = textureLoader.load('./textures/grass/ambientOcclusion.jpg')
 const grassNormalTexture = textureLoader.load('./textures/grass/normal.jpg')
 const grassRoughnessTexture = textureLoader.load('./textures/grass/roughness.jpg')
+const particleTexture = textureLoader.load('./textures/particles/2.png')
 
 grassColorTexture.repeat.set(8, 8)
 grassAmbientOcclusionTexture.repeat.set(8, 8)
@@ -60,6 +62,15 @@ grassRoughnessTexture.wrapT = THREE.RepeatWrapping
 bricksColorTexture.colorSpace = THREE.SRGBColorSpace
 doorColorTexture.colorSpace = THREE.SRGBColorSpace
 grassColorTexture.colorSpace = THREE.SRGBColorSpace
+
+/**
+ * Animated Bushes
+ */
+const particlesCount = 1000
+const particlesRadius = 1
+let animatedBush = new AnimatedBush(particleTexture, particlesCount, particlesRadius);
+animatedBush.position.set(0, 1, 3.4)
+scene.add(animatedBush);
 
 /**
  * House
@@ -221,6 +232,7 @@ const ghost3Cone = new THREE.Mesh(
 )
 ghost3.add(ghost3Cone)
 scene.add(ghost3)
+
 /**
  * Sizes
  */
@@ -309,6 +321,8 @@ ghost3.shadow.camera.far = 7
  */
 const clock = new THREE.Clock()
 
+console.log(animatedBush)
+
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
@@ -330,6 +344,9 @@ const tick = () =>
     ghost3.position.x = Math.cos(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.32))
     ghost3.position.z = Math.sin(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.5))
     // ghost3.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5)
+
+    animatedBush.geometry.attributes.position.needsUpdate = true
+
 
     // Render
     renderer.render(scene, camera)
