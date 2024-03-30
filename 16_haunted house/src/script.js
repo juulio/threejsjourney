@@ -66,11 +66,11 @@ grassColorTexture.colorSpace = THREE.SRGBColorSpace
 /**
  * Animated Bushes
  */
-const particlesCount = 1000
-const particlesRadius = 1
-let animatedBush = new AnimatedBush(particleTexture, particlesCount, particlesRadius);
-animatedBush.position.set(0, 1, 3.4)
-scene.add(animatedBush);
+const particlesCount = 100
+const particlesRadius = 0.2
+const animatedBush = new AnimatedBush(particleTexture, particlesCount, particlesRadius);
+// animatedBush.animatedBushMesh.position.set(0, 1, 3)
+scene.add(animatedBush.animatedBushMesh);
 
 /**
  * House
@@ -233,6 +233,11 @@ const ghost3Cone = new THREE.Mesh(
 ghost3.add(ghost3Cone)
 scene.add(ghost3)
 
+const ghost4 = new THREE.PointLight('#00ff00', 2, 3)
+ghost4.position.set(0, 1, 3)
+ghost4.add(animatedBush.animatedBushMesh)
+scene.add(ghost4)
+
 /**
  * Sizes
  */
@@ -291,12 +296,14 @@ doorLight.castShadow = true
 ghost1.castShadow = true
 ghost2.castShadow = true
 ghost3.castShadow = true
+ghost4.castShadow = true
 
 walls.castShadow = true
 bush1.castShadow = true
 bush2.castShadow = true
 bush3.castShadow = true
 bush4.castShadow = true
+animatedBush.animatedBushMesh.castShadow = true
 
 floor.receiveShadow = true
 
@@ -316,12 +323,19 @@ ghost3.shadow.mapSize.width = 256
 ghost3.shadow.mapSize.height = 256
 ghost3.shadow.camera.far = 7
 
+ghost4.shadow.mapSize.width = 256
+ghost4.shadow.mapSize.height = 256
+ghost4.shadow.camera.far = 7
+
+
+
+
 /**
  * Animate
  */
 const clock = new THREE.Clock()
 
-console.log(animatedBush)
+// console.log(animatedBush.animatedBushMesh.position)
 
 const tick = () =>
 {
@@ -333,19 +347,21 @@ const tick = () =>
     const ghost1Angle = elapsedTime * 0.5
     ghost1.position.x = Math.cos(ghost1Angle) * 4
     ghost1.position.z = Math.sin(ghost1Angle) * 4
-    // ghost1.position.y = Math.sin(elapsedTime * 3)
 
     const ghost2Angle = - elapsedTime * 0.32
     ghost2.position.x = Math.cos(ghost2Angle) * 4
     ghost2.position.z = Math.sin(ghost2Angle) * 4
-    // ghost2.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5)
 
     const ghost3Angle = elapsedTime * 0.18
     ghost3.position.x = Math.cos(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.32))
     ghost3.position.z = Math.sin(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.5))
-    // ghost3.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5)
 
-    animatedBush.geometry.attributes.position.needsUpdate = true
+    const ghost4Angle = elapsedTime * 0.18
+    ghost4.position.x = Math.cos(ghost4Angle) * (4 + Math.sin(elapsedTime * 0.12))
+    ghost4.position.z = Math.sin(ghost4Angle) * (4 + Math.sin(elapsedTime * 0.5))
+
+    animatedBush.updateParticles()
+    // animatedBush.animatedBushMesh.geometry.attributes.position.needsUpdate = true
 
 
     // Render

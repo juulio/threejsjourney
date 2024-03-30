@@ -20,7 +20,7 @@ export default class AnimatedBush {
         }
 
         this.particlesMaterial = new THREE.PointsMaterial({
-            size: 0.1,
+            size: 0.08,
             sizeAttenuation: true, 
             color: '#00ff00',
             transparent: true,
@@ -33,22 +33,24 @@ export default class AnimatedBush {
 
         this.particlesGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( this.positions, 3 ) );
 
-        return new THREE.Points(this.particlesGeometry, this.particlesMaterial)
+        this.animatedBushMesh = new THREE.Points(this.particlesGeometry, this.particlesMaterial)
     }
 
     /**
      * Update Particles to move and create a sphere
      */
     updateParticles() {
+        let theta, phi
+
         for (let x = 0; x < this.particlesCount * 3; x+=3) {
             theta = Math.PI*2*Math.random()
             phi =Math.PI*2*Math.random()
-            positions[x] = (this.particleRadius) * Math.cos(theta) * Math.sin(phi)
-            positions[x + 1] = (this.particleRadius) * Math.sin(theta) * Math.sin(phi)
-            positions[x + 2] = (this.particleRadius) * Math.cos(phi)
+            this.positions[x] = (this.particleRadius) * Math.cos(theta) * Math.sin(phi)
+            this.positions[x + 1] = (this.particleRadius) * Math.sin(theta) * Math.sin(phi)
+            this.positions[x + 2] = (this.particleRadius) * Math.cos(phi)
         }
     
-        this.particlesGeometry.attributes.position.array = positions;
+        this.particlesGeometry.attributes.position.array = this.positions;
         this.particlesGeometry.attributes.position.needsUpdate = true;
     }
 }
