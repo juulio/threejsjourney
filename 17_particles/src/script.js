@@ -36,7 +36,7 @@ for(let i=0;i<count*3;i++){
 const particlesMaterial = new THREE.PointsMaterial({
     size: 0.1,
     sizeAttenuation: true, 
-    color: '#ff88cc',
+    color: '#00ff00',
     transparent: true,
     alphaMap: particleTexture,
     depthWrite: false,
@@ -98,15 +98,16 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Update Particles to move and create a sphere
  */
-const updateParticles = () => {
-    const ps = particlesGeometry.attributes.position.array;
+const updateParticles = (elapsedTime) => {
     for (let x = 0; x < count * 3; x+=3) {
         theta = Math.PI*2*Math.random()
         phi =Math.PI*2*Math.random()
-        ps[x] = (radius) * Math.cos(theta) * Math.sin(phi)
-        ps[x + 1] = (radius) * Math.sin(theta) * Math.sin(phi)
-        ps[x + 2] = (radius) * Math.cos(phi)
+        positions[x] = (radius) * Math.cos(theta) * Math.sin(phi)
+        positions[x + 1] = (radius) * Math.sin(theta) * Math.sin(phi)
+        positions[x + 2] = (radius) * Math.cos(phi)
     }
+
+    particlesGeometry.attributes.position.array = positions;
     particlesGeometry.attributes.position.needsUpdate = true;
 }
 
@@ -122,7 +123,7 @@ const tick = () =>
     particlesGeometry.attributes.position.needsUpdate = true
 
     // Update controls
-    controls.update()
+    controls.update(elapsedTime)
 
     // Render
     renderer.render(scene, camera)
