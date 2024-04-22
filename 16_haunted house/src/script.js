@@ -340,7 +340,7 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
-
+    console.log(elapsedTime)
     // Update controls
     controls.update()
 
