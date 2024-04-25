@@ -3,6 +3,11 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import waterVertexShader from './shaders/water/vertex.glsl'
 import waterFragmentShader from './shaders/water/fragment.glsl'
+import Stats from 'three/examples/jsm/libs/stats.module.js'
+
+var stats = new Stats();
+stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild( stats.dom );
 
 /**
  * Base
@@ -24,7 +29,7 @@ const scene = new THREE.Scene()
  */
 // Geometry
 let waterGeometry = new THREE.PlaneGeometry(2, 2, 512, 512)
-
+// let waterGeometry = new THREE.SphereGeometry(1, 128, 128)
 // Colors
 debugObject.depthColor = '#186691'
 debugObject.surfaceColor = '#9bd8ff'
@@ -126,6 +131,7 @@ const clock = new THREE.Clock()
 
 const tick = () =>
 {
+    stats.begin();
     const elapsedTime = clock.getElapsedTime()
 
     // Water
@@ -136,7 +142,7 @@ const tick = () =>
 
     // Render
     renderer.render(scene, camera)
-
+    stats.end();
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }
