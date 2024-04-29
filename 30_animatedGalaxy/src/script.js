@@ -111,7 +111,7 @@ const generateGalaxy = () =>
         fragmentShader: fragmentShader,
         uniforms:
         {
-            uSize: { value: 10 * renderer.getPixelRatio() },
+            uSize: { value: 2 * renderer.getPixelRatio() },
             uTime: { value: 0 },
         },
     })
@@ -130,7 +130,6 @@ gui.add(parameters, 'randomness').min(0).max(2).step(0.001).onFinishChange(gener
 gui.add(parameters, 'randomnessPower').min(1).max(10).step(0.001).onFinishChange(generateGalaxy)
 gui.addColor(parameters, 'insideColor').onFinishChange(generateGalaxy)
 gui.addColor(parameters, 'outsideColor').onFinishChange(generateGalaxy)
-
 /**
  * Sizes
  */
@@ -181,6 +180,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  * Generate the first galaxy
  */
 generateGalaxy()
+gui.add(material.uniforms.uSize, 'value').min(0).max(20).step(0.5).name('point size').onFinishChange(generateGalaxy)
 
 
 /**

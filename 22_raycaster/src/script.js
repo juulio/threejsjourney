@@ -147,10 +147,10 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
-     // Animate objects
-     object1.position.y = Math.sin(elapsedTime * 0.3) * 1.5
-     object2.position.y = Math.sin(elapsedTime * 0.8) * 1.5
-     object3.position.y = Math.sin(elapsedTime * 1.4) * 1.5
+    //  // Animate objects
+    //  object1.position.y = Math.sin(elapsedTime * 0.3) * 1.5
+    //  object2.position.y = Math.sin(elapsedTime * 0.8) * 1.5
+    //  object3.position.y = Math.sin(elapsedTime * 1.4) * 1.5
 
      // Cast a ray
     const rayOrigin = new THREE.Vector3(- 3, 0, 0)
@@ -220,7 +220,7 @@ const tick = () =>
     if(model)
     {
         const modelIntersects = raycaster.intersectObject(model)
-        console.log(modelIntersects)
+        // console.log(modelIntersects)
         if(modelIntersects.length){
             model.scale.set(1.5, 1.5, 1.5)
         }
