@@ -67,10 +67,12 @@ const normalTexture = textureLoader.load('/models/LeePerrySmith/normal.jpg')
 const customUniforms = {
     uTime: { value: 0 }
 }
+
 const material = new THREE.MeshStandardMaterial( {
     map: mapTexture,
     normalMap: normalTexture
 })
+
 material.onBeforeCompile = (shader) =>
 {   
     shader.uniforms.uTime = { value: 0 }
